@@ -25,4 +25,10 @@ class TaskController extends Controller
 
         return response() -> json($task, 201);
     }
+
+    public function getAllTasks() {
+        $taskList = Task::with('tags')->get();
+
+        return response() -> json($taskList, 200);
+    }
 }
