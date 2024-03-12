@@ -24,3 +24,5 @@ Route::post('save', [TaskController::class, 'saveTask']);
 Route::get('get-all-tasks', [TaskController::class, 'getAllTasks']);
 
 Route::patch('update/{id}', [TaskController::class, 'updateTask']);
+
+Route::delete('delete/{id}', [TaskController::class, 'deleteTask']);

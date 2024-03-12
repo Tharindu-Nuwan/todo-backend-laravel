@@ -48,6 +48,16 @@ class TaskController extends Controller
 
         $task -> tags() -> sync($validatedData['tags']);
 
-        return response()->json(['message'=>'Updated task'], 204);
+        return response()->json(['message'=>'Task updated'], 200);
+    }
+
+    public function deleteTask($id) {
+        $task = Task::findOrFail($id);
+
+        $task -> tags() -> detach();
+
+        $task -> delete();
+
+        return response()->json(['message'=>'Task Deleted'], 200);
     }
 }
