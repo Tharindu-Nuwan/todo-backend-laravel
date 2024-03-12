@@ -17,20 +17,7 @@ return new class extends Migration
             $table->unsignedBigInteger('task_id');
             $table->unsignedBigInteger('tag_id');
             $table->timestamps();
-
-            $table->foreign('task_id')->references('id')->on('tasks')->onDelete('cascade');
-            $table->foreign('tag_id')->references('id')->on('tags')->onDelete('cascade');
         });
-
-        $tags = ['Work', 'Study', 'Entertainment', 'Family'];
-
-        foreach($tags as $tag) {
-            Tag::create([
-                'tag_name' => $tag,
-                'created_at' => now(),
-                'updated_at' => now()
-            ]);
-        }
     }
 
     /**

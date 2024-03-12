@@ -17,8 +17,7 @@ class TaskController extends Controller
 
         $task = Task::create([
             'title' => $validatedData['title'],
-            'description' => $validatedData['description'],
-            'date' => now()
+            'description' => $validatedData['description']
         ]);
 
         $task -> tags() -> attach($validatedData['tags']);
@@ -30,5 +29,25 @@ class TaskController extends Controller
         $taskList = Task::with('tags')->get();
 
         return response() -> json($taskList, 200);
+    }
+
+    public function updateTask(Request $request, $id) {
+        $task = Task::findOrFail($id);
+
+        $validatedData = $request -> validate([
+            'title' => 'required|string|max:250',
+            'description' => 'required|string',
+            'tags' => 'array',
+            'tags.*' => 'integer|exists:tags,id'
+        ]);
+
+        $task -> update([
+            'title' => $validatedData['title'],
+            'description' => $validatedData['description']
+        ]);
+
+        $task -> tags() -> sync($validatedData['tags']);
+
+        return response()->json(['message'=>'Updated task'], 204);
     }
 }

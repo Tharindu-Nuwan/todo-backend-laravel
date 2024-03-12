@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\Tag;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -16,6 +17,16 @@ return new class extends Migration
             $table->string('tag_name');
             $table->timestamps();
         });
+
+        $tags = ['Work', 'Study', 'Entertainment', 'Family'];
+
+        foreach($tags as $tag) {
+            Tag::create([
+                'tag_name' => $tag,
+                'created_at' => now(),
+                'updated_at' => now()
+            ]);
+        }
     }
 
     /**
