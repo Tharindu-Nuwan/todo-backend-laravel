@@ -19,10 +19,10 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::post('save', [TaskController::class, 'saveTask']);
+Route::post('save', [TaskController::class, 'save']);
 
-Route::get('get-all-tasks', [TaskController::class, 'getAllTasks']);
+Route::get('get-all-tasks', [TaskController::class, 'get']);
 
-Route::patch('update/{id}', [TaskController::class, 'updateTask']);
+Route::patch('update/{id}', [TaskController::class, 'update']);
 
-Route::delete('delete/{id}', [TaskController::class, 'deleteTask']);
+Route::delete('delete/{id}', [TaskController::class, 'delete']);
