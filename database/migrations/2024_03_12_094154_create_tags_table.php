@@ -17,16 +17,6 @@ return new class extends Migration
             $table->string('tag_name');
             $table->timestamps();
         });
-
-        $tags = ['Work', 'Study', 'Entertainment', 'Family'];
-
-        foreach($tags as $tag) {
-            Tag::create([
-                'tag_name' => $tag,
-                'created_at' => now(),
-                'updated_at' => now()
-            ]);
-        }
     }
 
     /**

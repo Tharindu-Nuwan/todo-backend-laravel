@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 
 class TaskController extends Controller
 {
-    public function saveTask(Request $request) {
+    public function save(Request $request) {
         $validatedData = $request -> validate([
             'title' => 'required|string|max:250',
             'description' => 'required|string',
@@ -20,21 +20,21 @@ class TaskController extends Controller
             'description' => $validatedData['description']
         ]);
 
-        $task -> tags() -> attach($validatedData['tags']);
+        $task->tags()->attach($validatedData['tags']);
 
-        return response() -> json($task, 201);
+        return response()->json($task, 201);
     }
 
-    public function getAllTasks() {
+    public function get() {
         $taskList = Task::with('tags')->get();
 
-        return response() -> json($taskList, 200);
+        return response()->json($taskList, 200);
     }
 
-    public function updateTask(Request $request, $id) {
+    public function update(Request $request, $id) {
         $task = Task::findOrFail($id);
 
-        $validatedData = $request -> validate([
+        $validatedData = $request->validate([
             'title' => 'required|string|max:250',
             'description' => 'required|string',
             'tags' => 'array',
@@ -46,17 +46,17 @@ class TaskController extends Controller
             'description' => $validatedData['description']
         ]);
 
-        $task -> tags() -> sync($validatedData['tags']);
+        $task->tags()->sync($validatedData['tags']);
 
         return response()->json(['message'=>'Task updated'], 200);
     }
 
-    public function deleteTask($id) {
+    public function delete($id) {
         $task = Task::findOrFail($id);
 
-        $task -> tags() -> detach();
+        $task->tags()->detach();
 
-        $task -> delete();
+        $task->delete();
 
         return response()->json(['message'=>'Task Deleted'], 200);
     }
