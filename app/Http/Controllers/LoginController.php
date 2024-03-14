@@ -3,9 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
+use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Validator;
 
 class LoginController extends Controller
@@ -42,6 +43,7 @@ class LoginController extends Controller
 
     public function login(Request $request)
     {
+
         $validatedData = Validator::make($request->all(), [
             'email' => 'required|email',
             'password' => 'required'
@@ -68,21 +70,6 @@ class LoginController extends Controller
             'status' => true,
             'message' => 'User Logged In Successfully',
             'token' => $user->createToken("API TOKEN")->plainTextToken
-        ], 200);
-    }
-
-
-    public function logout(Request $request)
-    {
-        Auth::logout();
-
-        $request->session()->invalidate();
-
-        $request->session()->regenerateToken();
-
-        return response()->json([
-            'status' => 'success',
-            'message' => 'User is logged out successfully'
         ], 200);
     }
 }

@@ -16,25 +16,13 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-// Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-//     return $request->user();
-// });
-
-// Route::post('save', [TaskController::class, 'save']);
-
-// Route::get('get-all-tasks', [TaskController::class, 'get']);
-
-// Route::patch('update/{id}', [TaskController::class, 'update']);
-
-// Route::delete('delete/{id}', [TaskController::class, 'delete']);
-
 Route::controller(LoginController::class)->group(function() {
     Route::post('/register', 'register');
     Route::post('/login', 'login');
 });
 
 Route::middleware('auth:sanctum')->group(function() {
-    Route::post('/logout', [LoginController::class, 'logout']);
+    // Route::post('/logout', [LoginController::class, 'logout']);
 
     Route::controller(TaskController::class)->group(function() {
         Route::post('/save', 'save');
