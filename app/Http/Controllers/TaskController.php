@@ -10,7 +10,7 @@ class TaskController extends Controller
 {
     public function save(Request $request) {
 
-        $user = Auth::user();
+        $id = Auth::id();
 
         $validatedData = $request -> validate([
             'title' => 'required|string|max:250',
@@ -21,7 +21,8 @@ class TaskController extends Controller
 
         $task = Task::create([
             'title' => $validatedData['title'],
-            'description' => $validatedData['description']
+            'description' => $validatedData['description'],
+            'user_id' => $id
         ]);
 
         $task->tags()->attach($validatedData['tags']);
@@ -30,7 +31,10 @@ class TaskController extends Controller
     }
 
     public function get() {
-        $taskList = Task::with('tags')->get();
+
+        $userId = Auth::id();
+
+        $taskList = Task::where('user_id', $userId)->with('tags')->get();
 
         return response()->json($taskList, 200);
     }

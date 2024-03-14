@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\LoginController;
 use App\Http\Controllers\TaskController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -15,14 +16,30 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
+// Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
+//     return $request->user();
+// });
+
+// Route::post('save', [TaskController::class, 'save']);
+
+// Route::get('get-all-tasks', [TaskController::class, 'get']);
+
+// Route::patch('update/{id}', [TaskController::class, 'update']);
+
+// Route::delete('delete/{id}', [TaskController::class, 'delete']);
+
+Route::controller(LoginController::class)->group(function() {
+    Route::post('/register', 'register');
+    Route::post('/login', 'login');
 });
 
-Route::post('save', [TaskController::class, 'save']);
+Route::middleware('auth:sanctum')->group(function() {
+    Route::post('/logout', [LoginController::class, 'logout']);
 
-Route::get('get-all-tasks', [TaskController::class, 'get']);
-
-Route::patch('update/{id}', [TaskController::class, 'update']);
-
-Route::delete('delete/{id}', [TaskController::class, 'delete']);
+    Route::controller(TaskController::class)->group(function() {
+        Route::post('/save', 'save');
+        Route::get('/get', 'get');
+        Route::patch('/update/{id}', 'update');
+        Route::delete('/delete/{id}', 'delete');
+    });
+});
