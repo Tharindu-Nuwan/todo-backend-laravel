@@ -4,10 +4,14 @@ namespace App\Http\Controllers;
 
 use App\Models\Task;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class TaskController extends Controller
 {
     public function save(Request $request) {
+
+        $user = Auth::user();
+
         $validatedData = $request -> validate([
             'title' => 'required|string|max:250',
             'description' => 'required|string',
