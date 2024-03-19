@@ -16,10 +16,28 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::controller(LoginController::class)->group(function() {
-    Route::post('/register', 'register');
-    Route::post('/login', 'login');
+Route::middleware(['cors'])->group(function () {
+    Route::controller(LoginController::class)->group(function() {
+        Route::post('/register', 'register');
+        Route::post('/login', 'login');
+    });
 });
+
+
+Route::middleware(['cors'])->group(function () {
+    Route::controller(TaskController::class)->group(function() {
+        Route::post('/save', 'save');
+        Route::get('/get', 'get');
+        Route::patch('/update/{id}', 'update');
+        Route::delete('/delete/{id}', 'delete');
+    });
+});
+
+// Route::controller(LoginController::class)->group(function() {
+//     Route::post('/register', 'register');
+//     Route::post('/login', 'login');
+// });
+
 
 Route::middleware('auth:sanctum')->group(function() {
     // Route::post('/logout', [LoginController::class, 'logout']);

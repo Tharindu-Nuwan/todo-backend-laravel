@@ -34,7 +34,10 @@ class TaskController extends Controller
 
         $userId = Auth::id();
 
-        $taskList = Task::where('user_id', $userId)->with('tags')->get();
+        $taskList = Task::where('user_id', $userId)
+        ->with('tags')
+        ->orderBy('created_at', 'desc')
+        ->get();
 
         return response()->json($taskList, 200);
     }
