@@ -57,7 +57,7 @@ class TaskController extends Controller
         $task -> update([
             'title' => $validatedData['title'],
             'description' => $validatedData['description'],
-            'status' => $validatedData['status']
+            'status' => $request->input('status', $task->status)
         ]);
 
         $task->tags()->sync($validatedData['tags']);
