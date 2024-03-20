@@ -22,7 +22,8 @@ class TaskController extends Controller
         $task = Task::create([
             'title' => $validatedData['title'],
             'description' => $validatedData['description'],
-            'user_id' => $id
+            'user_id' => $id,
+            'status' => false
         ]);
 
         $task->tags()->attach($validatedData['tags']);
@@ -48,13 +49,15 @@ class TaskController extends Controller
         $validatedData = $request->validate([
             'title' => 'required|string|max:250',
             'description' => 'required|string',
+            'status' => 'boolean',
             'tags' => 'array',
             'tags.*' => 'integer|exists:tags,id'
         ]);
 
         $task -> update([
             'title' => $validatedData['title'],
-            'description' => $validatedData['description']
+            'description' => $validatedData['description'],
+            'status' => $validatedData['status']
         ]);
 
         $task->tags()->sync($validatedData['tags']);
